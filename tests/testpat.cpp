@@ -4,13 +4,15 @@
 #include "kms++.h"
 
 #include "test.h"
+#include "testoptions.h"
 
 using namespace std;
 using namespace kms;
 
-int main()
+int main(int argc, char **argv)
 {
 	Card card;
+	TestOptions opts(argc, argv);
 
 	if (card.master() == false)
 		printf("Not DRM master, modeset may fail\n");
@@ -29,6 +31,9 @@ int main()
 		// RG16 XR24 UYVY YUYV NV12
 
 		auto mode = conn->get_default_mode();
+
+		if (opts.modename() != "")
+			mode = conn->get_mode(opts.modename());
 
 		auto fb = new DumbFramebuffer(card, mode.hdisplay, mode.vdisplay, PixelFormat::XRGB8888);
 		draw_test_pattern(*fb);
