@@ -7,3 +7,5 @@ target_link_libraries(db kms++ ${LIBDRM_LIBRARIES})
 add_executable (testpat testpat.cpp testoptions.cpp)
 target_link_libraries(testpat kms++ ${LIBDRM_LIBRARIES})
 
+add_executable (kmsprint kmsprint.cpp)
+target_link_libraries(kmsprint kms++ ${LIBDRM_LIBRARIES})
