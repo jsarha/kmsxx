@@ -34,19 +34,19 @@ class CmdOptions
 {
 public:
 	CmdOptions(int argc, char **argv, map<string, CmdOption>& opts) :
-		m_opts(opts), m_command(argv[0]) {
+		m_opts(opts), m_cmd(argv[0]) {
 		for (int i = 1; i < argc; i++) {
 			if (argv[i][0] == '-') {
 				auto ii = m_opts.find(&argv[i][1]);
 				if (ii == m_opts.end()) {
-					m_error += m_command + ": " +
+					m_error += m_cmd + ": " +
 						string(argv[i]) +
 						": unknown option\n";
 					continue;
 				}
 				if ((*ii).second.has_param()) {
 					if (++i == argc) {
-						m_error += m_command + ": -" +
+						m_error += m_cmd + ": -" +
 							(*ii).first +
 							": parameter missing\n";
 						continue;
@@ -61,6 +61,7 @@ public:
 		}
 	}
 	const string& error() const { return m_error; }
+	const string& cmd() const { return m_cmd; }
 
 	bool is_set(const string& name) const {
 		return m_opts.at(name).is_set();
@@ -69,6 +70,15 @@ public:
 		return m_opts.at(name).param();
 	}
 	const vector<string>& params() const { return m_params; }
+	CmdOption& get_option(const string& name) { return m_opts.at(name); }
+
+	int num_options() const {
+		int ret(0);
+		for (const auto& p : m_opts)
+			if (p.second.is_set())
+				ret++;
+		return ret;
+	}
 
 	const string usage() const {
 		string ret("usage:\n");
@@ -81,7 +91,7 @@ public:
 
 private:
 	map<string, CmdOption>& m_opts;
-	string m_command;
+	string m_cmd;
 	vector<string> m_params;
 	string m_error; 
 };
