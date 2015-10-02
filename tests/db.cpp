@@ -111,8 +111,8 @@ int main()
 
 		auto mode = conn->get_default_mode();
 
-		auto fb1 = new Framebuffer(card, mode.hdisplay, mode.vdisplay, "XR24");
-		auto fb2 = new Framebuffer(card, mode.hdisplay, mode.vdisplay, "XR24");
+		auto fb1 = new Framebuffer(card, mode.get_hdisplay(), mode.get_vdisplay(), "XR24");
+		auto fb2 = new Framebuffer(card, mode.get_hdisplay(), mode.get_vdisplay(), "XR24");
 
 		printf("conn %u, crtc %u, fb1 %u, fb2 %u\n", conn->id(), crtc->id(), fb1->id(), fb2->id());
 

@@ -36,7 +36,7 @@ int main(int argc, char **argv)
 		if (opts.modename() != "")
 			mode = conn->get_mode(opts.modename());
 
-		auto fb = new Framebuffer(card, mode.hdisplay, mode.vdisplay, "XR24");
+		auto fb = new Framebuffer(card, mode.get_hdisplay(), mode.get_vdisplay(), "XR24");
 		draw_test_pattern(*fb);
 		fbs.push_back(fb);
 
