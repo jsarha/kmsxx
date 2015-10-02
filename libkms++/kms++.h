@@ -9,3 +9,4 @@
 #include "plane.h"
 #include "property.h"
 #include "pipeline.h"
+#include "videomode.h"

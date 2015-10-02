@@ -20,6 +20,7 @@ public:
 	virtual void setup() { };
 
 	virtual void print_short() const = 0;
+	//virtual void print_details() const = 0;
 	void print_props() const;
 
 	uint32_t id() const { return m_id; }

@@ -84,9 +84,9 @@ void Connector::print_short() const
 
 Videomode Connector::get_default_mode() const
 {
-	drmModeModeInfo drmmode = m_priv->drm_connector->modes[0];
+	drmModeModeInfo* drmmode = &m_priv->drm_connector->modes[0];
 
-	return drm_mode_to_video_mode(drmmode);
+	return Videomode(drmmode);
 }
 
 Videomode Connector::get_mode(const string& mode) const
@@ -95,7 +95,7 @@ Videomode Connector::get_mode(const string& mode) const
 
 	for (int i = 0; i < c->count_modes; i++)
                 if (mode == c->modes[i].name)
-                        return drm_mode_to_video_mode(c->modes[i]);
+                        return Videomode(&c->modes[i]);
 
         throw invalid_argument(mode + ": mode not found");
 }

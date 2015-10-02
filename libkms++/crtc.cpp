@@ -50,7 +50,7 @@ void Crtc::print_short() const
 int Crtc::set_mode(Connector* conn, Framebuffer& fb, const Videomode& mode)
 {
 	uint32_t conns[] = { conn->id() };
-	drmModeModeInfo drmmode = video_mode_to_drm_mode(mode);
+	drmModeModeInfo drmmode = *mode.get_drm_mode();
 
 	return drmModeSetCrtc(card().fd(), id(), fb.id(),
 			      0, 0,
