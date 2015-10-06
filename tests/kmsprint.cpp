@@ -9,69 +9,71 @@
 using namespace std;
 using namespace kms;
 
-/*
-static const char *connection_str[] = {
-	[0] = "<unknown>",
-	[DRM_MODE_CONNECTED] = "Connected",
-	[DRM_MODE_DISCONNECTED] = "Disconnected",
-	[DRM_MODE_UNKNOWNCONNECTION] = "Unknown",
-};
+namespace kmsprint {
+
+void print_details(const Videomode &m, const string& ind)
+{
+	printf("%s%s\t%06d %04d %04d %04d %04d %d  %04d %04d %04d %04d %d  %02d 0x%04x %02d\n",
+	       ind.c_str(),
+	       m.get_name().c_str(),
+	       m.get_clock(),
+	       m.get_hdisplay(),
+	       m.get_hsync_start(),
+	       m.get_hsync_end(),
+	       m.get_htotal(),
+	       m.get_hskew(),
+	       m.get_vdisplay(),
+	       m.get_vsync_start(),
+	       m.get_vsync_end(),
+	       m.get_vtotal(),
+	       m.get_vscan(),
+	       m.get_vrefresh(),
+	       m.get_flags(),
+	       m.get_type());
+}
 
 static const char *subpixel_str[] = {
 	[0] = "<unknown>",
-	[DRM_MODE_SUBPIXEL_UNKNOWN] = "unknown",
-	[DRM_MODE_SUBPIXEL_HORIZONTAL_RGB] = "horizontal RGB",
-	[DRM_MODE_SUBPIXEL_HORIZONTAL_BGR] = "horizontal BGR",
-	[DRM_MODE_SUBPIXEL_VERTICAL_RGB] = "vertical RGB",
-	[DRM_MODE_SUBPIXEL_VERTICAL_BGR] = "vertical BGR",
-	[DRM_MODE_SUBPIXEL_NONE] = "none",
+	[SubPixel::Unknown] = "Unknown",
+	[SubPixel::Horizontal_RGB] = "Horizontal RGB",
+	[SubPixel::Horizontal_BGR] = "Horizontal BGR",
+	[SubPixel::Vertical_RGB] = "Vertical RGB",
+	[SubPixel::Vertical_BGR] = "Vertical BGR",
+	[SubPixel::None] = "None",
 };
 
-void Connector::print_details() const
+void print_details(const Connector &c, const string& ind)
 {
-	auto c = m_priv->drm_connector;
-
-	printf("\tEncoder %d\n", c->encoder_id);
-	printf("\tType %d\n", c->connector_type);
-	printf("\tType id %d\n", c->connector_type_id);
-	printf("\tConnection %d\n", c->connection);
-	printf("\tSubpixel %s\n", subpixel_str[c->subpixel]);
+	printf("%sEncoder %s Id %d %sconnected\n", ind.c_str(),
+	       c.get_fullname().c_str(), c.id(),
+	       c.connected() ? "" : "dis");
+	printf("%sType %d\n", ind.c_str(), c.get_connector_type());
+	printf("%sSubpixel %s\n", ind.c_str(),
+	       subpixel_str[(int)c.get_subpixel()]);
+	string ind2 = ind + " ";
+	for (auto mode : c.get_modes())
+		print_details(mode, ind2);
 }
 
-void Connector::print_encoders() const
-{
-	auto c = m_priv->drm_connector;
-
-	for (int i; i < c->count_encoders; i++)
-		card().get_object(c->encoders[i]).print_short();
 }
 
-void Connector::print_modes() const
-{
-	auto c = m_priv->drm_connector;
-
-	for (int i; i < c->count_encoders; i++)
-		card().get_object(c->encoders[i]).print_short();
-}
-*/
+using namespace kmsprint;
 
 int main(int argc, char **argv)
 {
 	Card card;
-	int idx = 0;
 
 	if (card.master() == false)
 		printf("Not DRM master, modeset may fail\n");
 
 	for (auto conn : card.get_connectors()) {
-		conn->print_short();
-	}
-
-	while (auto crtc = card.get_crtc_by_index(idx++)) {
-		crtc->print_short();
+		print_details(*conn, string(""));
 	}
 
 	for (auto plane : card.get_planes()) {
 		plane->print_short();
 	}
+
+	return 0;
 }
+
