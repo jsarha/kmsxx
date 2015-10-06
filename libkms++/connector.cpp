@@ -139,4 +139,50 @@ Crtc* Connector::get_current_crtc() const
 		return 0;
 }
 
+uint32_t Connector::get_connector_type() const
+{
+	return m_priv->drm_connector->connector_type;
+}
+
+uint32_t Connector::get_connector_type_id() const
+{
+	return m_priv->drm_connector->connector_type_id;
+}
+
+uint32_t Connector::get_mmWidth() const
+{
+	return m_priv->drm_connector->mmWidth;
+}
+
+uint32_t Connector::get_mmHeight() const
+{
+	return m_priv->drm_connector->mmHeight;
+}
+
+SubPixel Connector::get_subpixel() const
+{
+	return (SubPixel)m_priv->drm_connector->subpixel;
+}
+
+std::vector<Videomode> Connector::get_modes() const
+{
+	vector<Videomode> modes;
+
+	for (int i = 0; i < m_priv->drm_connector->count_modes; i++)
+		modes.push_back(Videomode(&m_priv->drm_connector->modes[i]));
+
+	return modes;
+}
+
+std::vector<Encoder*> Connector::get_encoders() const
+{
+	vector<Encoder*> encoders;
+
+	for (int i = 0; i < m_priv->drm_connector->count_encoders; i++) {
+		auto enc = card().get_encoder(m_priv->drm_connector->encoders[i]);
+		encoders.push_back(enc);
+	}
+	return encoders;
+}
+
 }

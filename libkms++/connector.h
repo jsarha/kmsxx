@@ -8,6 +8,15 @@
 namespace kms
 {
 
+enum class SubPixel {
+	Unknown		= 1,
+	Horizontal_RGB	= 2,
+	Horizontal_BGR	= 3,
+	Vertical_RGB	= 4,
+	Vertical_BGR	= 5,
+	None		= 6,
+};
+
 struct ConnectorPriv;
 
 class Connector : public DrmObject
@@ -25,6 +34,14 @@ public:
 
 	bool connected() const;
 
+	const std::string& get_fullname() const { return m_fullname; }
+	uint32_t get_connector_type() const;
+	uint32_t get_connector_type_id() const;
+	uint32_t get_mmWidth() const;
+	uint32_t get_mmHeight() const;
+	SubPixel get_subpixel() const;
+	std::vector<Videomode> get_modes() const;
+	std::vector<Encoder*> get_encoders() const;
 private:
 	Connector(Card& card, uint32_t id, uint32_t idx);
 	~Connector();
