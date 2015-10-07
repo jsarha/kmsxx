@@ -23,25 +23,25 @@ public:
 
 	const _drmModeModeInfo* get_drm_mode() const;
 
-	uint32_t get_clock() const;
+	uint32_t clock() const;
 
-	uint16_t get_hdisplay() const;
-	uint16_t get_hsync_start() const;
-	uint16_t get_hsync_end() const;
-	uint16_t get_htotal() const;
-	uint16_t get_hskew() const;
+	uint16_t hdisplay() const;
+	uint16_t hsync_start() const;
+	uint16_t hsync_end() const;
+	uint16_t htotal() const;
+	uint16_t hskew() const;
 
-	uint16_t get_vdisplay() const;
-	uint16_t get_vsync_start() const;
-	uint16_t get_vsync_end() const;
-	uint16_t get_vtotal() const;
-	uint16_t get_vscan() const;
+	uint16_t vdisplay() const;
+	uint16_t vsync_start() const;
+	uint16_t vsync_end() const;
+	uint16_t vtotal() const;
+	uint16_t vscan() const;
 
-	uint32_t get_vrefresh() const;
+	uint32_t vrefresh() const;
 
-	uint32_t get_flags() const;
-	uint32_t get_type() const;
-	const std::string& get_name() const { return m_name; }
+	uint32_t flags() const;
+	uint32_t type() const;
+	const std::string& name() const { return m_name; }
 
 private:
 	VideomodePriv* m_priv;

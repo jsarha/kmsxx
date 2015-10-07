@@ -55,72 +55,72 @@ const drmModeModeInfo* Videomode::get_drm_mode(void) const
 	return &m_priv->drm_mode;
 }
 
-uint32_t Videomode::get_clock() const
+uint32_t Videomode::clock() const
 {
 	return m_priv->drm_mode.clock;
 }
 
-uint16_t Videomode::get_hdisplay() const
+uint16_t Videomode::hdisplay() const
 {
 	return m_priv->drm_mode.hdisplay;
 }
 
-uint16_t Videomode::get_hsync_start() const
+uint16_t Videomode::hsync_start() const
 {
 	return m_priv->drm_mode.hsync_start;
 }
 
-uint16_t Videomode::get_hsync_end() const
+uint16_t Videomode::hsync_end() const
 {
 	return m_priv->drm_mode.hsync_end;
 }
 
-uint16_t Videomode::get_htotal() const
+uint16_t Videomode::htotal() const
 {
 	return m_priv->drm_mode.htotal;
 }
 
-uint16_t Videomode::get_hskew() const
+uint16_t Videomode::hskew() const
 {
 	return m_priv->drm_mode.hskew;
 }
 
-uint16_t Videomode::get_vdisplay() const
+uint16_t Videomode::vdisplay() const
 {
 	return m_priv->drm_mode.vdisplay;
 }
 
-uint16_t Videomode::get_vsync_start() const
+uint16_t Videomode::vsync_start() const
 {
 	return m_priv->drm_mode.vsync_start;
 }
 
-uint16_t Videomode::get_vsync_end() const
+uint16_t Videomode::vsync_end() const
 {
 	return m_priv->drm_mode.vsync_end;
 }
 
-uint16_t Videomode::get_vtotal() const
+uint16_t Videomode::vtotal() const
 {
 	return m_priv->drm_mode.vtotal;
 }
 
-uint16_t Videomode::get_vscan() const
+uint16_t Videomode::vscan() const
 {
 	return m_priv->drm_mode.vscan;
 }
 
-uint32_t Videomode::get_vrefresh() const
+uint32_t Videomode::vrefresh() const
 {
 	return m_priv->drm_mode.vrefresh;
 }
 
-uint32_t Videomode::get_flags() const
+uint32_t Videomode::flags() const
 {
 	return m_priv->drm_mode.flags;
 }
 
-uint32_t Videomode::get_type() const
+uint32_t Videomode::type() const
 {
 	return m_priv->drm_mode.type;
 }
