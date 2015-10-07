@@ -11,9 +11,9 @@ using namespace kms;
 
 namespace kmsprint {
 
-void print_details(const Videomode &m, const string& ind)
+void print_mode(const Videomode &m, const string& ind)
 {
-	printf("%s%s\t%06d %04d %04d %04d %04d %d  %04d %04d %04d %04d %d  %02d 0x%04x %02d\n",
+	printf("%s%s\t%6d %4d %4d %4d %4d %d  %4d %4d %4d %4d %d  %2d 0x%04x %2d\n",
 	       ind.c_str(),
 	       m.get_name().c_str(),
 	       m.get_clock(),
@@ -32,6 +32,12 @@ void print_details(const Videomode &m, const string& ind)
 	       m.get_type());
 }
 
+void print_encoder(const Encoder &e, const string& ind)
+{
+	printf("%sEncoder Id %d type %d\n", ind.c_str(),
+	       e.id(), e.get_encoder_type());
+}
+
 static const char *subpixel_str[] = {
 	[0] = "<unknown>",
 	[SubPixel::Unknown] = "Unknown",
@@ -42,17 +48,19 @@ static const char *subpixel_str[] = {
 	[SubPixel::None] = "None",
 };
 
-void print_details(const Connector &c, const string& ind)
+void print_connector(const Connector &c, const string& ind)
 {
-	printf("%sEncoder %s Id %d %sconnected\n", ind.c_str(),
-	       c.get_fullname().c_str(), c.id(),
+	printf("%sConnector %s Id %d Type %d %sconnected\n", ind.c_str(),
+	       c.get_fullname().c_str(), c.id(), c.get_connector_type(),
 	       c.connected() ? "" : "dis");
-	printf("%sType %d\n", ind.c_str(), c.get_connector_type());
-	printf("%sSubpixel %s\n", ind.c_str(),
-	       subpixel_str[(int)c.get_subpixel()]);
+	if (c.get_subpixel() != SubPixel::Unknown)
+		printf("%sSubpixel %s\n", ind.c_str(),
+		       subpixel_str[(int)c.get_subpixel()]);
 	string ind2 = ind + " ";
+	for (auto enc : c.get_encoders())
+		print_encoder(*enc, ind2);
 	for (auto mode : c.get_modes())
-		print_details(mode, ind2);
+		print_mode(mode, ind2);	
 }
 
 }
@@ -67,7 +75,7 @@ int main(int argc, char **argv)
 		printf("Not DRM master, modeset may fail\n");
 
 	for (auto conn : card.get_connectors()) {
-		print_details(*conn, string(""));
+		print_connector(*conn, string(""));
 	}
 
 	for (auto plane : card.get_planes()) {
