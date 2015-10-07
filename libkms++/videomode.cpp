@@ -14,40 +14,35 @@ struct VideomodePriv
 	drmModeModeInfo drm_mode;
 };
 
-Videomode::Videomode()
-{
-	m_priv = new VideomodePriv();
-	assert(m_priv->drm_mode);
-	m_name = m_priv->drm_mode.name;
-}
-
-
 Videomode::Videomode(const drmModeModeInfo* drm_mode)
 {
-	m_priv = new VideomodePriv();
-	assert(m_priv->drm_mode);
-	m_priv->drm_mode = *drm_mode;
-	m_name = m_priv->drm_mode.name;
+	initialize(drm_mode);
 }
 
-Videomode::Videomode(const Videomode& mode)
+void Videomode::initialize(const _drmModeModeInfo* drm_mode)
 {
-	m_priv = new VideomodePriv();
-	assert(m_priv->drm_mode);
-	*m_priv = *mode.m_priv;
-	m_name = mode.m_name;
-}
+	assert(drm_mode);
 
-Videomode::~Videomode()
-{
-	delete m_priv;
-}
+	m_clock = drm_mode->clock;
 
-Videomode& Videomode::operator=(const Videomode& other)
-{
-	m_priv->drm_mode = other.m_priv->drm_mode;
-	m_name = other.m_name;
-	return *this;
+	m_hdisplay = drm_mode->hdisplay;
+	m_hsync_start = drm_mode->hsync_start;
+	m_hsync_end = drm_mode->hsync_end;
+	m_htotal = drm_mode->htotal;
+	m_hskew = drm_mode->hskew;
+
+	m_vdisplay = drm_mode->vdisplay;
+	m_vsync_start = drm_mode->vsync_start;
+	m_vsync_end = drm_mode->vsync_end;
+	m_vtotal = drm_mode->vtotal;
+	m_vscan = drm_mode->vscan;
+
+	m_vrefresh = drm_mode->vrefresh;
+
+	m_flags = drm_mode->flags;
+	m_type = drm_mode->type;
+
+	m_name = drm_mode->name;
 }
 
 const drmModeModeInfo* Videomode::get_drm_mode(void) const
