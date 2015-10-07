@@ -17,6 +17,7 @@ public:
 	Crtc* get_crtc() const;
 	std::vector<Crtc*> get_possible_crtcs() const;
 
+	uint32_t get_encoder_type() const;
 private:
 	Encoder(Card& card, uint32_t id);
 	~Encoder();

@@ -63,4 +63,10 @@ vector<Crtc*> Encoder::get_possible_crtcs() const
 
 	return crtcs;
 }
+
+uint32_t Encoder::get_encoder_type() const
+{
+	return m_priv->drm_encoder->encoder_type;
+}
+
 }
