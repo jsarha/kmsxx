@@ -11,11 +11,17 @@ using namespace kms;
 
 namespace kmsprint {
 
+string width(int w, string str)
+{
+	str.resize(w, ' ');
+	return str;
+}
+
 void print_mode(const Videomode &m, const string& ind)
 {
-	printf("%s%s\t%6d %4d %4d %4d %4d %d  %4d %4d %4d %4d %d  %2d 0x%04x %2d\n",
+	printf("%s%s %6d %4d %4d %4d %4d %d %4d %4d %4d %4d %d  %2d 0x%04x %2d\n",
 	       ind.c_str(),
-	       m.get_name().c_str(),
+	       width(11, m.get_name()).c_str(),
 	       m.get_clock(),
 	       m.get_hdisplay(),
 	       m.get_hsync_start(),
@@ -50,13 +56,13 @@ static const char *subpixel_str[] = {
 
 void print_connector(const Connector &c, const string& ind)
 {
-	printf("%sConnector %s Id %d Type %d %sconnected\n", ind.c_str(),
-	       c.get_fullname().c_str(), c.id(), c.get_connector_type(),
+	printf("%sConnector %s Id %d %sconnected\n", ind.c_str(),
+	       c.get_fullname().c_str(), c.id(),
 	       c.connected() ? "" : "dis");
 	if (c.get_subpixel() != SubPixel::Unknown)
 		printf("%sSubpixel %s\n", ind.c_str(),
 		       subpixel_str[(int)c.get_subpixel()]);
-	string ind2 = ind + " ";
+	string ind2 = ind + "  ";
 	for (auto enc : c.get_encoders())
 		print_encoder(*enc, ind2);
 	for (auto mode : c.get_modes())
