@@ -64,4 +64,58 @@ PlaneType Plane::plane_type() const
 	else
 		return PlaneType::Overlay;
 }
+
+vector<string> Plane::get_formats() const
+{
+	auto p = m_priv->drm_plane;
+	vector<string> r;
+
+	for (unsigned i = 0; i < p->count_formats; ++i) {
+		uint32_t f = p->formats[i];
+		char buf[5];
+		sprintf(buf, "%c%c%c%c",
+			(f >> 0) & 0xff,
+			(f >> 8) & 0xff,
+			(f >> 16) & 0xff,
+			(f >> 24) & 0xff);
+		r.push_back(string(buf));
+	}
+	return r;
+}
+
+uint32_t Plane::crtc_id() const
+{
+	return m_priv->drm_plane->crtc_id;
+}
+
+uint32_t Plane::fb_id() const
+{
+	return m_priv->drm_plane->fb_id;
+}
+
+uint32_t Plane::crtc_x() const
+{
+	return m_priv->drm_plane->crtc_x;
+}
+
+uint32_t Plane::crtc_y() const
+{
+	return m_priv->drm_plane->crtc_y;
+}
+
+uint32_t Plane::x() const
+{
+	return m_priv->drm_plane->x;
+}
+
+uint32_t Plane::y() const
+{
+	return m_priv->drm_plane->y;
+}
+
+uint32_t Plane::gamma_size() const
+{
+	return m_priv->drm_plane->gamma_size;
+}
+
 }
