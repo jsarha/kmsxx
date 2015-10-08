@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include <vector>
 
 #include "decls.h"
 
@@ -28,6 +29,7 @@ public:
 	uint64_t get_prop_value(uint32_t id) const;
 	uint64_t get_prop_value(const std::string& name) const;
 
+	std::vector<uint32_t> get_property_ids() const;
 protected:
 	DrmObject(Card& card, uint32_t object_type);
 	DrmObject(Card& card, uint32_t id, uint32_t object_type, uint32_t idx = 0);
