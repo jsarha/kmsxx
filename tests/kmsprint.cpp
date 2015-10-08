@@ -21,21 +21,21 @@ void print_mode(const Videomode &m, const string& ind)
 {
 	printf("%s%s %6d %4d %4d %4d %4d %d %4d %4d %4d %4d %d  %2d 0x%04x %2d\n",
 	       ind.c_str(),
-	       width(11, m.get_name()).c_str(),
-	       m.get_clock(),
-	       m.get_hdisplay(),
-	       m.get_hsync_start(),
-	       m.get_hsync_end(),
-	       m.get_htotal(),
-	       m.get_hskew(),
-	       m.get_vdisplay(),
-	       m.get_vsync_start(),
-	       m.get_vsync_end(),
-	       m.get_vtotal(),
-	       m.get_vscan(),
-	       m.get_vrefresh(),
-	       m.get_flags(),
-	       m.get_type());
+	       width(11, m.name()).c_str(),
+	       m.clock(),
+	       m.hdisplay(),
+	       m.hsync_start(),
+	       m.hsync_end(),
+	       m.htotal(),
+	       m.hskew(),
+	       m.vdisplay(),
+	       m.vsync_start(),
+	       m.vsync_end(),
+	       m.vtotal(),
+	       m.vscan(),
+	       m.vrefresh(),
+	       m.flags(),
+	       m.type());
 }
 
 void print_encoder(const Encoder &e, const string& ind)
