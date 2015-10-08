@@ -38,7 +38,7 @@ void print_mode(const Videomode &m, const string& ind)
 	       m.type());
 }
 
-void print_plane(const Plane &p, const string& ind)
+void print_plane(const Plane& p, const string& ind)
 {
 	printf("%sPlane %d %d,%d -> %dx%d formats:", ind.c_str(),
 	       p.id(), p.crtc_x(), p.crtc_y(), p.x(), p.y());
@@ -47,7 +47,7 @@ void print_plane(const Plane &p, const string& ind)
 	printf("\n");
 }
 
-void print_crtc(const Crtc &cc, const string& ind)
+void print_crtc(const Crtc& cc, const string& ind)
 {
 	printf("%sCRTC %d BufferId %d %dx%d at %dx%d gamma_size %d\n",
 	       ind.c_str(), cc.id(), cc.buffer_id(), cc.width(), 
@@ -60,7 +60,7 @@ void print_crtc(const Crtc &cc, const string& ind)
 		print_plane(*p, ind + "  ");
 }
 
-void print_encoder(const Encoder &e, const string& ind)
+void print_encoder(const Encoder& e, const string& ind)
 {
 	printf("%sEncoder Id %d type %s\n", ind.c_str(),
 	       e.id(), e.get_encoder_type().c_str());
@@ -81,7 +81,7 @@ static const char *subpixel_str[] = {
 	[SubPixel::None] = "None",
 };
 
-void print_connector(const Connector &c, const string& ind)
+void print_connector(const Connector& c, const string& ind)
 {
 	printf("%sConnector %s Id %d %sconnected\n", ind.c_str(),
 	       c.get_fullname().c_str(), c.id(),
