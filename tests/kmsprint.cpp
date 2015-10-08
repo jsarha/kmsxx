@@ -38,14 +38,26 @@ void print_mode(const Videomode &m, const string& ind)
 	       m.type());
 }
 
+void print_plane(const Plane &p, const string& ind)
+{
+	printf("%sPlane %d %d,%d -> %dx%d formats:", ind.c_str(),
+	       p.id(), p.crtc_x(), p.crtc_y(), p.x(), p.y());
+	for (auto f : p.get_formats())
+		printf(" %s", f.c_str());
+	printf("\n");
+}
+
 void print_crtc(const Crtc &cc, const string& ind)
 {
-	printf("%sCRTC Id %d BufferId %d %dx%d at %dx%d gamma_size %d\n",
+	printf("%sCRTC %d BufferId %d %dx%d at %dx%d gamma_size %d\n",
 	       ind.c_str(), cc.id(), cc.buffer_id(), cc.width(), 
 	       cc.height(), cc.x(), cc.y(), cc.gamma_size());
 	
 	printf("%s  Mode ", ind.c_str());
 	print_mode(cc.mode(), "");	
+
+	for (auto p : cc.get_possible_planes())
+		print_plane(*p, ind + "  ");
 }
 
 void print_encoder(const Encoder &e, const string& ind)
@@ -57,6 +69,7 @@ void print_encoder(const Encoder &e, const string& ind)
 		print_crtc(*cc, ind + "  ");
 	}
 }
+
 
 static const char *subpixel_str[] = {
 	[0] = "<unknown>",
