@@ -40,8 +40,8 @@ void print_mode(const Videomode &m, const string& ind)
 
 void print_encoder(const Encoder &e, const string& ind)
 {
-	printf("%sEncoder Id %d type %d\n", ind.c_str(),
-	       e.id(), e.get_encoder_type());
+	printf("%sEncoder Id %d type %s\n", ind.c_str(),
+	       e.id(), e.get_encoder_type().c_str());
 }
 
 static const char *subpixel_str[] = {
