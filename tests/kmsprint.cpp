@@ -21,7 +21,7 @@ void print_mode(const Videomode &m, const string& ind)
 {
 	printf("%s%s %6d %4d %4d %4d %4d %d %4d %4d %4d %4d %d  %2d 0x%04x %2d\n",
 	       ind.c_str(),
-	       width(11, m.name()).c_str(),
+	       m.name().length() == 0? "" : width(11, m.name()).c_str(),
 	       m.clock(),
 	       m.hdisplay(),
 	       m.hsync_start(),
@@ -38,10 +38,24 @@ void print_mode(const Videomode &m, const string& ind)
 	       m.type());
 }
 
+void print_crtc(const Crtc &cc, const string& ind)
+{
+	printf("%sCRTC Id %d BufferId %d %dx%d at %dx%d gamma_size %d\n",
+	       ind.c_str(), cc.id(), cc.buffer_id(), cc.width(), 
+	       cc.height(), cc.x(), cc.y(), cc.gamma_size());
+	
+	printf("%s  Mode ", ind.c_str());
+	print_mode(cc.mode(), "");	
+}
+
 void print_encoder(const Encoder &e, const string& ind)
 {
 	printf("%sEncoder Id %d type %s\n", ind.c_str(),
 	       e.id(), e.get_encoder_type().c_str());
+
+	for (auto cc : e.get_possible_crtcs()) {
+		print_crtc(*cc, ind + "  ");
+	}
 }
 
 static const char *subpixel_str[] = {
