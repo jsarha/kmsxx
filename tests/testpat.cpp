@@ -4,15 +4,19 @@
 #include "kms++.h"
 
 #include "test.h"
-#include "testoptions.h"
+#include "cmdoptions.h"
 
 using namespace std;
 using namespace kms;
 
+static map<string, CmdOption> options = {
+	{ "mode", HAS_PARAM },
+};
+
 int main(int argc, char **argv)
 {
 	Card card;
-	TestOptions opts(argc, argv);
+	CmdOptions opts(argc, argv, options);
 
 	if (card.master() == false)
 		printf("Not DRM master, modeset may fail\n");
@@ -32,8 +36,8 @@ int main(int argc, char **argv)
 
 		auto mode = conn->get_default_mode();
 
-		if (opts.modename() != "")
-			mode = conn->get_mode(opts.modename());
+		if (opts.is_set("mode"))
+			mode = conn->get_mode(opts.param("mode"));
 
 		auto fb = new DumbFramebuffer(card, mode.hdisplay, mode.vdisplay, PixelFormat::XRGB8888);
 		draw_test_pattern(*fb);
