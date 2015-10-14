@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 		auto mode = conn->get_default_mode();
 
 		if (opts.is_set("mode"))
-			mode = conn->get_mode(opts.param("mode"));
+			mode = conn->get_mode(opts.opt_param("mode"));
 
 		auto fb = new DumbFramebuffer(card, mode.hdisplay, mode.vdisplay, PixelFormat::XRGB8888);
 		draw_test_pattern(*fb);

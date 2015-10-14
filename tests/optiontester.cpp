@@ -24,7 +24,7 @@ int main(int argc, char **argv)
 	for (auto p : options)
 		printf("Option %s set %d param %s\n", 
 		       p.first.c_str(), opts.is_set(p.first),
-		       opts.param(p.first).c_str());;
+		       opts.opt_param(p.first).c_str());;
 
 	return 0;
 }

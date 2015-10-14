@@ -65,7 +65,7 @@ public:
 	bool is_set(const string& name) const {
 		return m_opts.at(name).is_set();
 	}
-	const string& param(const string& name) const { 
+	const string& opt_param(const string& name) const { 
 		return m_opts.at(name).param();
 	}
 	const vector<string>& params() const { return m_params; }
