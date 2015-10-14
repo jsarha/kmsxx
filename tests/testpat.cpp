@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <algorithm>
+#include <iostream>
 
 #include "kms++.h"
 
@@ -10,7 +11,7 @@ using namespace std;
 using namespace kms;
 
 static map<string, CmdOption> options = {
-	{ "mode", HAS_PARAM },
+	{ "mode", HAS_PARAM("Set display mode, for example 1920x1080") },
 };
 
 int main(int argc, char **argv)
@@ -18,6 +19,11 @@ int main(int argc, char **argv)
 	Card card;
 	CmdOptions opts(argc, argv, options);
 
+	if (opts.error().length()) {
+		cerr << opts.error() << opts.usage();
+		return -1;
+	}
+		
 	if (card.master() == false)
 		printf("Not DRM master, modeset may fail\n");
 
