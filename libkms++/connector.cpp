@@ -185,7 +185,8 @@ std::vector<Videomode> Connector::get_modes() const
 	vector<Videomode> modes;
 
 	for (int i = 0; i < m_priv->drm_connector->count_modes; i++)
-		modes.push_back(Videomode(&m_priv->drm_connector->modes[i]));
+		modes.push_back(drm_mode_to_video_mode(
+					m_priv->drm_connector->modes[i]));
 
 	return modes;
 }

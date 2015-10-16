@@ -120,7 +120,7 @@ int Crtc::mode_valid() const
 
 Videomode Crtc::mode() const
 {
-	return Videomode(&m_priv->drm_crtc->mode);
+	return drm_mode_to_video_mode(m_priv->drm_crtc->mode);
 }
 
 int Crtc::gamma_size() const
