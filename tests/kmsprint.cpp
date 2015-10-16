@@ -37,7 +37,7 @@ void print_mode(const Videomode &m, int ind)
 	       m.type());
 }
 
-void print_property(uint64_t val, Property& p, int ind)
+void print_property(uint64_t val, const Property& p, int ind)
 {
 	printf("%s%s (id %d) = %s\n", width(ind, "").c_str(),
 	       p.name().c_str(), p.id(), p.to_str(val).c_str());
@@ -45,12 +45,12 @@ void print_property(uint64_t val, Property& p, int ind)
 
 void print_properties(DrmObject& o, int ind)
 {
-	auto ids = o.get_property_ids();
+	auto pmap = o.get_prop_map();
 	printf("%sProperties, %u in total:\n", width(ind, "").c_str(),
-	       (unsigned) ids.size());
-	for (auto id : ids) {
-		Property& p = *o.card().get_prop(id);
-		print_property(o.get_prop_value(id), p, ind + 2);
+	       (unsigned) pmap.size());
+	for (auto pp : pmap) {
+		const Property& p = *o.card().get_prop(pp.first);
+		print_property(pp.second, p, ind + 2);
 	}
 }
 
