@@ -59,7 +59,7 @@ void print_plane(Plane& p, int ind, const CmdOptions& opts)
 	printf("%sPlane Id %d %d,%d -> %dx%d formats:", width(ind, "").c_str(),
 	       p.id(), p.crtc_x(), p.crtc_y(), p.x(), p.y());
 	for (auto f : p.get_formats())
-		printf(" %s", f.c_str());
+		printf(" %s", PixelFormatToFourCC(f).c_str());
 	printf("\n");
 
 	if (opts.is_set("props"))
