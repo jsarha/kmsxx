@@ -68,12 +68,9 @@ vector<Crtc*> Encoder::get_possible_crtcs() const
 	for (int idx = 0; bits; idx++, bits >>= 1) {
 		if ((bits & 1) == 0)
 			continue;
-		try {
-			auto crtc = card().get_crtc_by_index(idx);
-			crtcs.push_back(crtc);
-		}
-		catch (exception& e) {
-		}
+
+		auto crtc = card().get_crtc_by_index(idx);
+		crtcs.push_back(crtc);
 	}
 
 	return crtcs;
