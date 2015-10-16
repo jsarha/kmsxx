@@ -72,13 +72,4 @@ void DrmObject::set_id(uint32_t id)
 	m_id = id;
 }
 
-vector<uint32_t> DrmObject::get_property_ids() const
-{
-	std::vector<uint32_t> r;
-
-	for (auto const& p : m_prop_values)
-		r.push_back(p.first);
-	return r;
-}
-
 }
