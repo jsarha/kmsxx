@@ -76,21 +76,14 @@ PlaneType Plane::plane_type() const
 		return PlaneType::Overlay;
 }
 
-vector<string> Plane::get_formats() const
+vector<PixelFormat> Plane::get_formats() const
 {
 	auto p = m_priv->drm_plane;
-	vector<string> r;
+	vector<PixelFormat> r;
 
-	for (unsigned i = 0; i < p->count_formats; ++i) {
-		uint32_t f = p->formats[i];
-		char buf[5];
-		sprintf(buf, "%c%c%c%c",
-			(f >> 0) & 0xff,
-			(f >> 8) & 0xff,
-			(f >> 16) & 0xff,
-			(f >> 24) & 0xff);
-		r.push_back(string(buf));
-	}
+	for (unsigned i = 0; i < p->count_formats; ++i)
+		r.push_back((PixelFormat) p->formats[i]);
+
 	return r;
 }
 

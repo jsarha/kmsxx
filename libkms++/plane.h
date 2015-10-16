@@ -25,7 +25,7 @@ public:
 
 	PlaneType plane_type() const;
 
-	std::vector<std::string> get_formats() const;
+	std::vector<PixelFormat> get_formats() const;
 	uint32_t crtc_id() const;
 	uint32_t fb_id() const;
 
