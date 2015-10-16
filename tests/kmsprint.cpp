@@ -62,7 +62,7 @@ void print_plane(Plane& p, int ind, const CmdOptions& opts)
 		printf(" %s", PixelFormatToFourCC(f).c_str());
 	printf("\n");
 
-	if (opts.is_set("props"))
+	if (opts.is_set("p"))
 		print_properties(p, ind+2);
 }
 
@@ -75,7 +75,7 @@ void print_crtc(Crtc& cc, int ind, const CmdOptions& opts)
 	printf("%s   Mode ", width(ind, "").c_str());
 	print_mode(cc.mode(), 0);
 
-	if (opts.is_set("props"))
+	if (opts.is_set("p"))
 		print_properties(cc, ind+2);
 
 	if (opts.is_set("r"))
@@ -88,7 +88,7 @@ void print_encoder(Encoder& e, int ind, const CmdOptions& opts)
 	printf("%sEncoder Id %d type %s\n", width(ind, "").c_str(),
 	       e.id(), e.get_encoder_type().c_str());
 
-	if (opts.is_set("props"))
+	if (opts.is_set("p"))
 		print_properties(e, ind+2);
 
 	if (opts.is_set("r"))
@@ -104,14 +104,14 @@ void print_connector(Connector& c, int ind, const CmdOptions& opts)
 		printf(" Subpixel: %s", c.subpixel_str().c_str());
 	printf("\n");
 
-	if (opts.is_set("props"))
+	if (opts.is_set("p"))
 		print_properties(c, ind+2);
 
 	if (opts.is_set("r"))
 		for (auto enc : c.get_encoders())
 			print_encoder(*enc, ind + 2, opts);
 
-	if (opts.is_set("modes")) {
+	if (opts.is_set("m")) {
 		auto modes = c.get_modes();
 		printf("%sModes, %u in total:\n", width(ind + 2, "").c_str(),
 		       (unsigned) modes.size());
@@ -123,9 +123,9 @@ void print_connector(Connector& c, int ind, const CmdOptions& opts)
 }
 
 static map<string, CmdOption> options = {
-	{ "id", HAS_PARAM("Object id to print") },
-	{ "props", NO_PARAM("Print properties") },
-	{ "modes", NO_PARAM("Print modes") },
+	{ "i", HAS_PARAM("Object id to print") },
+	{ "p", NO_PARAM("Print properties") },
+	{ "m", NO_PARAM("Print modes") },
 	{ "r", NO_PARAM("Recursively print all related objects") },
 };
 
@@ -142,15 +142,15 @@ int main(int argc, char **argv)
 	}
 
 	/* No options implyles recursion */
-	if (!opts.is_set("id")) {
+	if (!opts.is_set("i")) {
 		opts.get_option("r").oset();
 		for (auto conn : card.get_connectors())
 			print_connector(*conn, 0, opts);
 		return 0;
 	}
 
-	if (opts.is_set("id")) {
-		auto ob = card.get_object(atoi(opts.opt_param("id").c_str()));
+	if (opts.is_set("i")) {
+		auto ob = card.get_object(atoi(opts.opt_param("i").c_str()));
 		if (!ob) {
 			cerr << opts.cmd() << ": Object id " <<
 				opts.opt_param("id") << " not found." << endl;

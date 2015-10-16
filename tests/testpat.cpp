@@ -11,7 +11,7 @@ using namespace std;
 using namespace kms;
 
 static map<string, CmdOption> options = {
-	{ "mode", HAS_PARAM("Set display mode, for example 1920x1080") },
+	{ "m", HAS_PARAM("Set display mode, for example 1920x1080") },
 };
 
 int main(int argc, char **argv)
