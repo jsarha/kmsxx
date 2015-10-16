@@ -21,6 +21,5 @@ using namespace kms;
 %include "plane.h"
 %include "connector.h"
 %include "encoder.h"
-%include "videomode.h"
 
 %include "kmstest.h"
