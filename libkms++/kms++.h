@@ -12,4 +12,3 @@
 #include "property.h"
 #include "pipeline.h"
 #include "pagefliphandler.h"
-#include "videomode.h"
