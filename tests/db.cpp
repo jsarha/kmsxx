@@ -64,7 +64,7 @@ class OutputFlipHandler : private PageFlipHandlerBase
 public:
 	OutputFlipHandler(Connector* conn, Crtc* crtc, const Videomode& mode)
 		: m_connector(conn), m_crtc(crtc), m_mode(mode),
-		  m_flipper(conn->card(), mode.hdisplay(), mode.vdisplay()),
+		  m_flipper(conn->card(), mode.hdisplay, mode.vdisplay),
 		  m_plane(0), m_plane_flipper(0)
 	{
 	}
@@ -72,7 +72,7 @@ public:
 	OutputFlipHandler(Connector* conn, Crtc* crtc, const Videomode& mode,
 			  Plane* plane, unsigned pwidth, unsigned pheight)
 		: m_connector(conn), m_crtc(crtc), m_mode(mode),
-		  m_flipper(conn->card(), mode.hdisplay(), mode.vdisplay()),
+		  m_flipper(conn->card(), mode.hdisplay, mode.vdisplay),
 		  m_plane(plane)
 	{
 		m_plane_flipper = new Flipper(conn->card(), pwidth, pheight);

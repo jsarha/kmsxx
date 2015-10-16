@@ -20,21 +20,21 @@ void print_mode(const Videomode &m, int ind)
 {
 	printf("%s%s %6d %4d %4d %4d %4d %d %4d %4d %4d %4d %d  %2d 0x%04x %2d\n",
 	       width(ind, "").c_str(),
-	       m.name().length() == 0? "" : width(11, m.name()).c_str(),
-	       m.clock(),
-	       m.hdisplay(),
-	       m.hsync_start(),
-	       m.hsync_end(),
-	       m.htotal(),
-	       m.hskew(),
-	       m.vdisplay(),
-	       m.vsync_start(),
-	       m.vsync_end(),
-	       m.vtotal(),
-	       m.vscan(),
-	       m.vrefresh(),
-	       m.flags(),
-	       m.type());
+	       m.name[0] == '\0' ? "" : width(11, m.name).c_str(),
+	       m.clock,
+	       m.hdisplay,
+	       m.hsync_start,
+	       m.hsync_end,
+	       m.htotal,
+	       m.hskew,
+	       m.vdisplay,
+	       m.vsync_start,
+	       m.vsync_end,
+	       m.vtotal,
+	       m.vscan,
+	       m.vrefresh,
+	       m.flags,
+	       m.type);
 }
 
 void print_property(uint64_t val, const Property& p, int ind)
