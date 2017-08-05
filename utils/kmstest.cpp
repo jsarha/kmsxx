@@ -857,11 +857,11 @@ private:
 		if (diff > m_slowest_frame)
 			m_slowest_frame = diff;
 
-		if (m_frame_num  % 100 == 0) {
+		if (1 || m_frame_num  % 100 == 0) {
 			std::chrono::duration<float> fsec = now - m_prev_print;
 			printf("Connector %s: fps %f, slowest %.2f ms\n",
 			       m_name.c_str(),
-			       100.0 / fsec.count(),
+			       1.0 / fsec.count(),
 			       m_slowest_frame.count() * 1000);
 			m_prev_print = now;
 			m_slowest_frame = std::chrono::duration<float>::min();

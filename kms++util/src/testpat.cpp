@@ -3,7 +3,7 @@
 
 #include <cstring>
 #include <cassert>
-#include <thread>
+//#include <thread>
 
 #include <kms++/kms++.h>
 #include <kms++util/kms++util.h>
@@ -152,7 +152,7 @@ static void draw_test_pattern_impl(IMappedFramebuffer& fb)
 {
 	draw_test_pattern_part(fb, 0, fb.height());
 	return;
-
+/*
 	if (fb.height() < 20) {
 		draw_test_pattern_part(fb, 0, fb.height());
 		return;
@@ -179,6 +179,7 @@ static void draw_test_pattern_impl(IMappedFramebuffer& fb)
 
 	for (thread& t : workers)
 		t.join();
+*/
 }
 
 void draw_test_pattern(IMappedFramebuffer &fb)
