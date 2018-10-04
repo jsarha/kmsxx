@@ -80,7 +80,6 @@ def test_am5_trans_dest():
         "trans-key-mode": 1,
         "trans-key": pykms.purple.rgb888,
         "background": 0,
-        "alpha_blender": 0,
     })
 
     print("Purple bg. Green, red, white boxes.")
@@ -147,7 +146,6 @@ def test_am5_trans_src():
         "trans-key-mode": 2,
         "trans-key": pykms.purple.rgb888,
         "background": 0,
-        "alpha_blender": 0,
     })
 
     print("White bg. Red and green boxes.")
@@ -172,7 +170,7 @@ def test_am5_trans_src():
 
     plane = planes[1]
     fb = fbs[1]
-    z = 3
+    z = 1
 
     plane.set_props({
         "FB_ID": fb.id,
