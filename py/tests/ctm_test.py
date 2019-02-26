@@ -32,11 +32,35 @@ res = pykms.ResourceManager(card)
 conn = res.reserve_connector(conn_name)
 crtc = res.reserve_crtc(conn)
 mode = conn.get_default_mode()
+format = pykms.PixelFormat.ARGB8888
+mode = conn.get_default_mode()
+modeb = mode.to_blob(card)
 
-fb = pykms.DumbFramebuffer(card, mode.hdisplay, mode.vdisplay, "XR24");
+fb = pykms.DumbFramebuffer(card, mode.hdisplay, mode.vdisplay, "AR24");
 pykms.draw_test_pattern(fb);
 
-crtc.set_mode(conn, fb, mode)
+plane = res.reserve_generic_plane(crtc, fb.format)
+
+crtc.disable_mode()
+
+input("press enter to set ctm at the same time with crtc mode\n")
+
+ctm = [ 0.0,	1.0,	0.0,
+        0.0,	0.0,	1.0,
+        1.0,	0.0,	0.0 ]
+
+ctmb = ctm_to_blob(ctm, card)
+
+req = pykms.AtomicReq(card)
+req.add(conn, "CRTC_ID", crtc.id)
+req.add(crtc, {"ACTIVE": 1,
+               "MODE_ID": modeb.id,
+               "CTM": ctmb.id})
+req.add_plane(plane, fb, crtc)
+r = req.commit_sync(allow_modeset = True)
+assert r == 0, "Initial commit failed: %d" % r
+
+print("r->b g->r b->g ctm active\n")
 
 input("press enter to set normal ctm\n")
 
@@ -47,18 +71,6 @@ ctm = [ 1.0,	0.0,	0.0,
 ctmb = ctm_to_blob(ctm, card)
 
 crtc.set_prop("CTM", ctmb.id)
-
-input("press enter to set new ctm\n")
-
-ctm = [ 0.0,	1.0,	0.0,
-        0.0,	0.0,	1.0,
-        1.0,	0.0,	0.0 ]
-
-ctmb = ctm_to_blob(ctm, card)
-
-crtc.set_prop("CTM", ctmb.id)
-
-print("r->b g->r b->g ctm active\n")
 
 input("press enter to set new ctm\n")
 
